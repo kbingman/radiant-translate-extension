@@ -9,8 +9,9 @@
           - else
             - I18n.with_locale(@locale) do
               = expander(level) + link_to("#{icon} #{node_title}", edit_admin_page_url(page, :locale => @locale), :title => page.url)
-
-            = page_type
+            %span.info
+              - unless @current_node.class.display_name == 'Page'
+                (#{h(@current_node.class.display_name)})
             = spinner
     - node.status_column do
       - unless simple
