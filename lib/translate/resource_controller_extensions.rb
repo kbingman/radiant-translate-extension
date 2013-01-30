@@ -4,8 +4,7 @@ module Translate::ResourceControllerExtensions
    base.class_eval do 
      
      def update
-       I18n.locale = @locale    
-       puts "*****************************************#{params[model_symbol]}"                                  
+       I18n.locale = @locale                                 
        model.update_attributes!(params[model_symbol])    
        I18n.locale = current_user.locale 
        response_for :update                          
