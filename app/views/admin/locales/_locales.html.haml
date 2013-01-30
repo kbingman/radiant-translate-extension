@@ -1,0 +1,10 @@
+- include_stylesheet 'admin/translate'  
+- content_for :toolbar  do   
+  - if Radiant::Config['translate.site_languages'].split(',').length > 1
+    %ul#locales   
+      %li
+        %span= t('translate_extension.site_language')
+      - Radiant::Config['translate.site_languages'].split(',').collect{ |l| l.strip }.each do |locale| 
+        %li= link_to locale.upcase, "?locale=#{locale}", :class => @locale == locale.to_sym ? 'current' : ''
+     
+    

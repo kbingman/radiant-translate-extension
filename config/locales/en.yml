@@ -1,0 +1,12 @@
+---
+en:
+  translate_extension:
+    site_language: Site Language
+    site_languages: Site Languages
+    content: '{{locale}} Content'   
+  config: 
+    translate: 
+      site_languages: Site Languages
+      default_site_language: Default Site Language
+      language: language   
+      
