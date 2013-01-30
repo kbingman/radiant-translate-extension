@@ -12,6 +12,8 @@ Gem::Specification.new do |s|
   s.summary     = %q{Translate for Radiant CMS}
   s.description = %q{Makes Radiant better by adding translate!}
   
+  s.add_dependency "globalize2", "~> 0.2.1"
+  
   ignores = if File.exist?('.gitignore')
     File.read('.gitignore').split("\n").inject([]) {|a,p| a + Dir[p] }
   else
