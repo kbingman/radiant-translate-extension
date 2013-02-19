@@ -3,30 +3,9 @@ module Translate::PageExtensions
     # base.class_eval do
     #   translates :title, :slug
     # end  
-    
-    def save_page_parts
-      if @page_parts   
-        puts '********************HEY'
-        parts_to_be_saved = []
-        @page_parts.each do |p|
-          p.save!
-          old_part = self.parts_without_pending.select{|op| op.name == p.name}.first
-          if old_part
-            PagePartTranslation.find_all_by_page_part_id(old_part.id).each do |transl|
-              transl.update_attributes(:page_part_id => p.id) unless transl.locale.to_sym == I18n.locale
-            end
-          end
-          parts_to_be_saved << p
-        end
-        self.parts_without_pending.clear
-        parts_to_be_saved.each {|part| self.parts_without_pending << part }
-      end
-      @page_parts = nil
-      true
-    end
   end
   
-  def localized_url(langcode)
+  def localized_path(langcode)
     cur_lang = I18n.locale.to_s
     if self.class_name.eql?("RailsPage") # (from the share_layouts extension)
       r = "/#{langcode}/#{self.url[3..-1]}"
@@ -37,6 +16,7 @@ module Translate::PageExtensions
     end
     r
   end  
+  alias :localized_url :localized_path
   
   def localized_slug(langcode)
     cur_lang = I18n.locale
