@@ -25,9 +25,9 @@ class TranslateExtension < Radiant::Extension
       translates :title, :slug, :breadcrumb    
     end   
     
-    PagePart.class_eval do
-      translates :content  
-    end
+    # PagePart.class_eval do
+    #   translates :content  
+    # end
     
     Snippet.class_eval do
       translates :content
