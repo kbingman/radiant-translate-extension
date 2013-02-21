@@ -6,14 +6,14 @@ module Translate::SiteControllerExtensions
       private
 
       def set_language 
-        if params[:locale] && (params[:locale] == 'de' || params[:locale] == 'en')
+        if params[:locale]
           I18n.locale = params[:locale].to_sym   
         else  
           # I18n.locale = Radiant::Config['translate.default_site_language']      
           # locale = location_map.include?(languages.first) ? languages.first : Radiant::Config['translate.default_site_language']
           locale = Radiant::Config['translate.default_site_language']
-          path = params[:url] unless params[:url] == '/'
-          redirect_to :locale => locale, :url => path, :status => 301   
+          # path = params[:url] unless params[:url] == '/'
+          # redirect_to :locale => locale, :url => path, :status => 301   
           # languages.first
         end
       end   
