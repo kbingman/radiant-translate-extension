@@ -29,9 +29,9 @@ class TranslateExtension < Radiant::Extension
       translates :content  
     end
     
-    Snippet.class_eval do
-      translates :content
-    end  
+    # Snippet.class_eval do
+    #   translates :content
+    # end  
 
   end   
 
