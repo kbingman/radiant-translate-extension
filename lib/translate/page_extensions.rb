@@ -1,4 +1,5 @@
 module Translate::PageExtensions
+  
   def self.included(base)
     # base.class_eval do
     #   translates :title, :slug
@@ -8,10 +9,10 @@ module Translate::PageExtensions
   def localized_path(langcode)
     cur_lang = I18n.locale.to_s
     if self.class_name.eql?("RailsPage") # (from the share_layouts extension)
-      r = "/#{langcode}/#{self.url[3..-1]}"
+      r = "/#{langcode}/#{self.path[3..-1]}"
     else
       I18n.locale = langcode
-      r = "/#{langcode}#{url}"
+      r = "/#{langcode}#{path}"
       I18n.locale = cur_lang
     end
     r

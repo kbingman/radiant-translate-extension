@@ -9,8 +9,12 @@ module Translate::TranslateTags
     tag.locals.page.localized_slug(tag.attr['locale'] || I18n.locale.to_s)
   end   
   
+  tag 'localized_path' do |tag|
+    tag.locals.page.localized_path(tag.attr['locale'] || I18n.locale.to_s)
+  end 
+  
   tag 'localized_url' do |tag|
-    tag.locals.page.localized_url(tag.attr['locale'] || I18n.locale.to_s)
+    tag.locals.page.localized_path(tag.attr['locale'] || I18n.locale.to_s)
   end 
   
   tag 'localized_title' do |tag|
