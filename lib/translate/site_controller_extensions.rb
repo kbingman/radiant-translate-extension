@@ -1,6 +1,7 @@
 module Translate::SiteControllerExtensions
   def self.included(base)
     base.class_eval do
+      
       before_filter :set_language
       
       def show_page
@@ -12,13 +13,19 @@ module Translate::SiteControllerExtensions
         else
           url = url.to_s
         end
-        if @page = find_page(url) && params[:locale]
-          batch_page_status_refresh if (url == "/" || url == "")
+
+        if @page = find_page(url) && !locale_included?(params[:locale])
+          if (url == '/' || url == '')
+            redirect_to "/#{locale}/", :status => 301
+          else
+            redirect_to :locale => locale, :url => url, :status => 301  
+          end
+        elsif @page = find_page(url)
+          
+          batch_page_status_refresh if (url == '/' || url == '')
           process_page(@page)
           set_cache_control
-          @performed_render ||= true
-        elsif @page = find_page(url)
-          redirect_to :locale => locale, :url => @page.path, :status => 301   
+          @performed_render ||= true 
         else
           render :template => 'site/not_found', :status => 404
         end
@@ -28,21 +35,21 @@ module Translate::SiteControllerExtensions
       
       private
 
-      def set_language 
-        I18n.locale = current_locale(params[:locale]).to_sym   
-      end   
-      
-      def current_locale locale
-        if locale_included?(locale)
-          locale
-        else
-          Radiant::Config['translate.default_site_language']
+        def set_language 
+          I18n.locale = current_locale(params[:locale]).to_sym   
+        end   
+        
+        def current_locale locale
+          if locale_included?(locale)
+            locale
+          else
+            Radiant::Config['translate.default_site_language']
+          end
         end
-      end
-      
-      def locale_included? locale
-        if Radiant::Config['translate.site_languages'].split(',').include?(locale)
-      end
+        
+        def locale_included? locale
+          Radiant::Config['translate.site_languages'].split(',').collect{ |l| l.strip }.include?(locale.to_s)
+        end
       
     end  
     

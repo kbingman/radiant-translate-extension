@@ -1,3 +1,5 @@
+require 'i18n'
+
 module Translate::TranslateTags
   include Radiant::Taggable  
   include LocalTime
@@ -32,6 +34,11 @@ module Translate::TranslateTags
   tag 'if_locale' do |tag|
     tag.expand if I18n.locale.to_s == tag.attr['locale']
   end
+  
+  tag 'translate' do |tag|
+    term = tag.attr['term']
+    I18n.translate term
+  end 
   
   # Hacked standard_tags
   
