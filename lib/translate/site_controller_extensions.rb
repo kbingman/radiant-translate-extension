@@ -3,7 +3,7 @@ module Translate::SiteControllerExtensions
     base.class_eval do
       
       before_filter :set_language
-      
+
       def show_page
         url = params[:url]
         locale = current_locale(params[:locale])
