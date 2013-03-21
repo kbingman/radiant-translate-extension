@@ -16,7 +16,10 @@ class TranslateExtension < Radiant::Extension
     SiteController.send :include, Translate::SiteControllerExtensions 
     
     Page.send :include, Translate::PageExtensions   
-    Page.send :include, Translate::TranslateTags    
+    Page.send :include, Translate::TranslateTags  
+    PagePart.send :include, Translate::PagePartExtensions   
+    
+    Radiant::Pagination::LinkRenderer.send :include, Translate::LinkRenderer
     
     admin.configuration.show.add :config, 'admin/configuration/show_translate', :after => 'defaults'
     admin.configuration.edit.add :form,   'admin/configuration/edit_translate', :after => 'edit_defaults'
@@ -25,9 +28,9 @@ class TranslateExtension < Radiant::Extension
       translates :title, :slug, :breadcrumb    
     end   
     
-    PagePart.class_eval do
-      translates :content  
-    end
+    # PagePart.class_eval do
+    #   translates :content  
+    # end
     
     # Snippet.class_eval do
     #   translates :content

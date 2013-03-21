@@ -4,6 +4,11 @@ module Translate::PageExtensions
     # base.class_eval do
     #   translates :title, :slug
     # end  
+    base.class_eval do
+      # These are needed for the Search Extension
+      has_many :page_translations
+      has_many :page_part_translations, :through => :parts    
+    end
   end
   
   def localized_path(langcode)
